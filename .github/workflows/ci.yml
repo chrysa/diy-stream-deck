@@ -1,0 +1,85 @@
+---
+name: CI
+
+on:
+    pull_request:
+        branches:
+            - main
+    push:
+        branches:
+            - main
+            - feature/**
+            - fix/**
+    workflow_dispatch:
+
+permissions:
+    contents: write
+    checks: write
+    pull-requests: write
+
+jobs:
+    lint:
+        name: Lint & Format
+        runs-on: ubuntu-latest
+        timeout-minutes: 10
+        strategy:
+            matrix:
+                python-version: ["3.12", "3.13"]
+        steps:
+            - uses: actions/checkout@v6
+
+            - uses: chrysa/github-actions/python-setup@main
+              with:
+                  python-version: ${{ matrix.python-version }}
+
+            - uses: chrysa/github-actions/ruff-check@main
+              with:
+                  python-version: ${{ matrix.python-version }}
+                  latest-python: "3.13"
+                  sources: "diy_stream_deck tests"
+
+    tests:
+        name: Tests
+        runs-on: ubuntu-latest
+        timeout-minutes: 10
+        strategy:
+            matrix:
+                python-version: ["3.12", "3.13"]
+        steps:
+            - uses: actions/checkout@v6
+
+            - uses: chrysa/github-actions/python-setup@main
+              with:
+                  python-version: ${{ matrix.python-version }}
+
+            - name: Install dependencies
+              run: pip install -e ".[dev]"
+
+            - uses: chrysa/github-actions/run-tests@main
+              with:
+                  python-version: ${{ matrix.python-version }}
+                  latest-python: "3.13"
+                  test-path: "tests/"
+
+    sonar:
+        name: SonarCloud
+        needs: [lint, tests]
+        if: github.ref == 'refs/heads/main'
+        runs-on: ubuntu-latest
+        timeout-minutes: 15
+        steps:
+            - uses: actions/checkout@v6
+              with:
+                  fetch-depth: 0
+
+            - name: SonarCloud Scan
+              uses: SonarSource/sonarcloud-github-action@v5
+              env:
+                  SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+              with:
+                  args: >
+                      -Dsonar.projectKey=chrysa_diy-stream-deck
+                      -Dsonar.organization=chrysa
+                      -Dsonar.python.version=3.12,3.13
+                      -Dsonar.sources=diy_stream_deck
+                      -Dsonar.tests=tests
