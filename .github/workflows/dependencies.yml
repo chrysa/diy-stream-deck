@@ -1,0 +1,12 @@
+---
+name: Dependencies
+
+on:
+    pull_request:
+
+jobs:
+    dependencies:
+        name: Check PR dependencies
+        runs-on: ubuntu-latest
+        steps:
+            - uses: gregsdennis/dependencies-action@main

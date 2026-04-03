@@ -1,0 +1,51 @@
+---
+# core engine changes
+core:
+    - changed-files:
+          - any-glob-to-any-file:
+                - "core/**"
+
+# action plugins
+actions:
+    - changed-files:
+          - any-glob-to-any-file:
+                - "actions/**"
+
+# hardware layer
+hardware:
+    - changed-files:
+          - any-glob-to-any-file:
+                - "hardware/**"
+
+# configuration layer
+config:
+    - changed-files:
+          - any-glob-to-any-file:
+                - "config/**"
+
+# tests
+test:
+    - changed-files:
+          - any-glob-to-any-file:
+                - "tests/**"
+
+# CI/CD changes
+ci:
+    - changed-files:
+          - any-glob-to-any-file:
+                - ".github/workflows/**"
+
+# documentation
+documentation:
+    - changed-files:
+          - any-glob-to-any-file:
+                - "*.md"
+                - "docs/**"
+
+# dependencies
+dependencies:
+    - changed-files:
+          - any-glob-to-any-file:
+                - "pyproject.toml"
+                - ".pre-commit-config.yaml"
+                - ".github/dependabot.yml"
