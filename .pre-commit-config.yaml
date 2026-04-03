@@ -9,7 +9,7 @@ repos:
           - id: no-commit-to-branch
 
     - repo: https://github.com/pre-commit/pre-commit-hooks
-      rev: v5.0.0
+      rev: f1dff44d3a9ae852957f34def96390f28719c232
       hooks:
           - id: trailing-whitespace
           - id: end-of-file-fixer
@@ -21,7 +21,7 @@ repos:
           - id: mixed-line-ending
 
     - repo: https://github.com/adrienverge/yamllint
-      rev: v1.35.1
+      rev: 30a25fe087e31d0345be0ffed4360e4651a44b6e
       hooks:
           - id: yamllint
             args: [--strict]
