@@ -1,0 +1,27 @@
+---
+repos:
+    - repo: https://github.com/chrysa/pre-commit-tools
+      rev: 0.0.63
+      hooks:
+          - id: ruff-check
+          - id: ruff-format-check
+          - id: detect-private-key
+          - id: no-commit-to-branch
+
+    - repo: https://github.com/pre-commit/pre-commit-hooks
+      rev: v5.0.0
+      hooks:
+          - id: trailing-whitespace
+          - id: end-of-file-fixer
+          - id: check-yaml
+          - id: check-json
+          - id: check-toml
+          - id: check-merge-conflict
+          - id: check-added-large-files
+          - id: mixed-line-ending
+
+    - repo: https://github.com/adrienverge/yamllint
+      rev: v1.35.1
+      hooks:
+          - id: yamllint
+            args: [--strict]
