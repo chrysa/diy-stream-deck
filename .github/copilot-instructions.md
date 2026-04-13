@@ -1,35 +1,69 @@
 ---
-# Copilot instructions for diy-stream-deck
+# diy-stream-deck — GitHub Copilot Instructions
 
-## Project
+## MANDATORY: Read Instructions FIRST
 
-DIY Stream Deck alternative — Python 3.12+, Linux/Windows cross-platform, YAML-driven key binding → action system with Home Assistant integration.
+**Before any development task**, read the relevant instruction files in `.github/instructions/`.
 
-## Architecture rules
+- `.github/instructions/python_guidelines.instructions.md` — Python 3.14, strict typing, ruff
+- `.github/instructions/platform.instructions.md` — Linux/Windows cross-platform abstraction, HID, actions
 
-- Core engine in `core/` must remain platform-agnostic
-- Hardware abstraction in `hardware/` — platform-specific imports must be conditional on `sys.platform`
-- Action plugins in `actions/` must be independently testable (no hardware required)
-- Configuration in `config/` — always load from YAML, never hardcode
-- Use `pynput` as the cross-platform fallback; use `evdev` only on Linux
+---
 
-## Code standards
+## Project Overview
 
-- Python 3.12+ syntax only
-- Type annotations on all public functions
-- `ruff` for lint and format — line length 100
-- `pytest` for tests with `pytest-asyncio` for async tests
-- No secrets in code — use environment variables only
-- OWASP Top 10 compliance: validate all external inputs
+DIY Stream Deck alternative compatible with **Linux and Windows**. Maps physical inputs (USB macropad, Raspberry Pi Pico W, virtual keyboard) to configurable actions: Home Assistant service calls, shell commands, HTTP requests, media controls, keyboard shortcuts.
 
-## Testing
+## Stack
 
-- Each action plugin must have unit tests in `tests/actions/`
-- Hardware layer must have tests using the `virtual` device type
-- Config loader must have schema validation tests
+| Layer | Tech |
+|---|---|
+| Language | Python 3.14 (min 3.12) |
+| Linux HID | `evdev` |
+| Windows HID | `pynput` |
+| Config | YAML (Pydantic schema validation) |
+| Actions | Plugin architecture |
+| UI | Optional system tray (`pystray`) |
+| Quality | ruff (lint+format), mypy strict |
+| Testing | pytest |
 
-## Related patterns
+## Repository Structure
 
-- See `chrysa/github-actions` for shared CI actions
-- See `chrysa/pre-commit-tools` for shared pre-commit hooks
-- See `chrysa/shared-standards` for global Copilot instructions
+```
+diy_stream_deck/
+  core/             Event loop, key mapper, action runner
+  actions/          Action plugins (ha_service, shell_cmd, http_request, media_control, hotkey)
+  hardware/         HID abstraction layer (macropad, pico-w, virtual)
+  config/           YAML schema (Pydantic) + loader
+  ui/               Optional system tray
+tests/              Unit + integration tests
+pyproject.toml
+```
+
+## Development Workflow
+
+```bash
+pip install -e ".[dev]"        # Install with dev extras
+pytest tests/ -v               # Run tests
+ruff check .                   # Lint
+ruff format --check .          # Format check
+pre-commit run --all-files     # Full pre-commit suite
+```
+
+## NON-NEGOTIABLE RULES
+
+- **Python 3.14** — `from __future__ import annotations` in every file
+- Cross-platform first: **no Linux-only code in `core/`** — use abstraction layer
+- `evdev` and `pynput` imported conditionally by platform (`sys.platform`)
+- YAML config drives everything — no hardcoded key bindings in source
+- Actions must be independently testable without hardware
+- Home Assistant integration is **optional** — app must start without it
+- ALL public functions fully type-annotated
+- OWASP Top 10: validate all external inputs (YAML config, HTTP responses, HA payloads)
+
+## Related repositories
+
+- `chrysa/github-actions` — shared CI actions
+- `chrysa/pre-commit-tools` — shared pre-commit hooks
+- `chrysa/shared-standards` — global Copilot instructions
+
