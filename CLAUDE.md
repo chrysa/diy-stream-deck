@@ -4,6 +4,10 @@
 
 DIY Stream Deck alternative compatible with Linux and Windows. Maps physical inputs (USB macropad, Raspberry Pi Pico W, virtual) to configurable actions: Home Assistant service calls, shell commands, HTTP requests, media controls, and keyboard shortcuts.
 
+
+## Language Rules
+
+- Language: English — all code, comments, documentation, instructions, and configuration files must be in English.
 ## Architecture
 
 - `core/` — event loop, key mapper, action runner
