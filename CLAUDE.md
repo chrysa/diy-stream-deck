@@ -1,5 +1,6 @@
 # CLAUDE.md — diy-stream-deck
 
+> @[claude-sonnet-4-6]
 ## Project Purpose
 
 DIY Stream Deck alternative compatible with Linux and Windows. Maps physical inputs (USB macropad, Raspberry Pi Pico W, virtual) to configurable actions: Home Assistant service calls, shell commands, HTTP requests, media controls, and keyboard shortcuts.
@@ -42,3 +43,11 @@ pre-commit run --all-files
 ## Notion
 
 Project tracking: https://www.notion.so/33759293e35e812f8d14ea4ea23618cf
+
+## Compact instructions
+
+When compacting, always preserve:
+1. List of all files modified this session (with paths)
+2. Current task description and next steps
+3. Any uncommitted / unpushed changes
+4. Open blockers and errors not yet resolved

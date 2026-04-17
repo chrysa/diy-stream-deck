@@ -11,16 +11,22 @@
 
 ## Table of Contents
 
-- [Overview](#overview)
-- [Architecture](#architecture)
-- [Hardware Options](#hardware-options)
-- [Requirements](#requirements)
-- [Quick Start](#quick-start)
-- [Configuration](#configuration)
-- [Actions](#actions)
-- [Home Assistant Integration](#home-assistant-integration)
-- [Development](#development)
-- [Roadmap](#roadmap)
+- [DIY Stream Deck](#diy-stream-deck)
+  - [Table of Contents](#table-of-contents)
+  - [Overview](#overview)
+    - [Goals](#goals)
+  - [Architecture](#architecture)
+  - [Hardware Options](#hardware-options)
+  - [Requirements](#requirements)
+  - [Quick Start](#quick-start)
+  - [Configuration](#configuration)
+  - [Actions](#actions)
+  - [Home Assistant Integration](#home-assistant-integration)
+  - [Development](#development)
+  - [Roadmap](#roadmap)
+  - [Cost Estimate](#cost-estimate)
+  - [Claude Optimization](#claude-optimization)
+  - [Related](#related)
 
 ---
 
@@ -212,6 +218,14 @@ Key milestones:
 Time estimate: 22–43 hours for full v1 implementation.
 
 ---
+
+## Claude Optimization
+
+This project uses the **Notion AI Project Update System (Claude Optimized)** for structured development with Claude.
+
+📖 **Reference:** [Notion AI Project Update System](https://www.notion.so/Notion-AI-Project-Update-System-Claude-Optimized-34459293e35e8181ba53ee0212bdba3f)
+
+**Use Case:** Sonnet for hardware integration logic + API design | Haiku for documentation and config generation
 
 ## Related
 
