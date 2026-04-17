@@ -16,7 +16,6 @@ testpaths = ["tests"]
 python_files = ["test_*.py"]
 python_classes = ["Test*"]
 python_functions = ["test_*"]
-addopts = "--cov=diy_stream_deck --cov-report=xml --cov-report=term-missing"
 
 [tool.coverage.run]
 source = ["diy_stream_deck"]
