@@ -1,24 +1,29 @@
----
 version: 2
 updates:
-    - package-ecosystem: pip
-      directory: /
-      schedule:
-          interval: weekly
-          day: monday
-      open-pull-requests-limit: 5
-      groups:
-          python-deps:
-              patterns:
-                  - "*"
-      assignees:
-          - chrysa
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+    open-pull-requests-limit: 5
+    labels:
+      - "dependencies"
 
-    - package-ecosystem: github-actions
-      directory: /
-      schedule:
-          interval: weekly
-          day: monday
-      open-pull-requests-limit: 5
-      assignees:
-          - chrysa
+  # Uncomment the block appropriate for your project:
+
+  # Python
+  # - package-ecosystem: "pip"
+  #   directory: "/"
+  #   schedule:
+  #     interval: "weekly"
+  #   open-pull-requests-limit: 5
+  #   labels:
+  #     - "dependencies"
+
+  # Node / npm
+  # - package-ecosystem: "npm"
+  #   directory: "/"
+  #   schedule:
+  #     interval: "weekly"
+  #   open-pull-requests-limit: 5
+  #   labels:
+  #     - "dependencies"
