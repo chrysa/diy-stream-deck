@@ -1,4 +1,5 @@
 """Tests for __main__ entry point."""
+
 import subprocess
 import sys
 
