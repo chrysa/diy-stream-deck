@@ -1,4 +1,5 @@
 """DIY Stream Deck entry point."""
+
 import argparse
 import sys
 
