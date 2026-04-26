@@ -5,7 +5,7 @@ fail_fast: false
 minimum_pre_commit_version: 4.1.0
 repos:
     - repo: https://github.com/chrysa/pre-commit-tools
-      rev: 0.0.63
+      rev: 0.1.0
       hooks:
           - id: ruff-check
           - id: ruff-format-check
