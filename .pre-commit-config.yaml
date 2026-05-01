@@ -1,7 +1,11 @@
 ---
+default_language_version:
+  python: python3
+fail_fast: false
+minimum_pre_commit_version: 4.1.0
 repos:
     - repo: https://github.com/chrysa/pre-commit-tools
-      rev: v0.1.1-37
+      rev: 0.1.0
       hooks:
           - id: ruff-check
           - id: ruff-format-check
@@ -9,7 +13,7 @@ repos:
           - id: no-commit-to-branch
 
     - repo: https://github.com/pre-commit/pre-commit-hooks
-      rev: f1dff44d3a9ae852957f34def96390f28719c232
+      rev: 803469bde8523f208d030ce33f575d7bee0ba9bf
       hooks:
           - id: trailing-whitespace
           - id: end-of-file-fixer
