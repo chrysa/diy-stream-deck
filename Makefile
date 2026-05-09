@@ -58,3 +58,10 @@ clean: ## Clean build artifacts
 	find . -type f -name "*.pyc" -delete
 	find . -type d -name "__pycache__" -exec rm -rf {} + 2>/dev/null || true
 	rm -rf .pytest_cache .mypy_cache .coverage coverage.xml dist build
+
+# ─── Compat aliases ───────────────────────────────────────────────────────────
+
+typecheck: ## Alias → type-check
+	@$(MAKE) type-check
+
+
