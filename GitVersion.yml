@@ -7,7 +7,7 @@ branches:
     main:
         regex: ^main$
     feature:
-        regex: ^feature/.*$
+        regex: ^(feature|feat)/.*$
         increment: Minor
     fix:
         regex: ^fix/.*$
