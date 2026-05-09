@@ -52,6 +52,11 @@ test: ## Run tests
 test-cov: ## Run tests with coverage report
 	pytest tests/ -v --cov=diy_stream_deck --cov-report=term-missing --cov-report=xml
 
+typecheck: type-check ## Run mypy type checking (alias for type-check)
+
+build: clean ## Build wheel distribution package
+	$(PYTHON) -m build
+
 # ─── Cleanup ──────────────────────────────────────────────────────────────────
 
 clean: ## Clean build artifacts
