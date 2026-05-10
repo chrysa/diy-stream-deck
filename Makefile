@@ -65,3 +65,6 @@ typecheck: ## Alias → type-check
 	@$(MAKE) type-check
 
 
+
+build: ## Build Docker image
+	docker compose build
