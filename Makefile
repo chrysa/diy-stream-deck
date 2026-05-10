@@ -50,7 +50,7 @@ test: ## Run tests
 	pytest tests/ -v
 
 test-cov: ## Run tests with coverage report
-	pytest tests/ -v --cov=diy_stream_deck --cov-report=term-missing --cov-report=xml
+	pytest tests/ -v --cov=diy_stream_deck --cov-report=term-missing --cov-report=xml --cov-fail-under=85
 
 # ─── Cleanup ──────────────────────────────────────────────────────────────────
 
