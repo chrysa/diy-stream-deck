@@ -50,7 +50,7 @@ test: ## Run tests
 	pytest tests/ -v
 
 test-cov: ## Run tests with coverage report
-	pytest tests/ -v --cov=diy_stream_deck --cov-report=term-missing --cov-report=xml
+	pytest tests/ -v --cov=diy_stream_deck --cov-report=term-missing --cov-report=xml --cov-fail-under=85
 
 typecheck: type-check ## Run mypy type checking (alias for type-check)
 
@@ -63,3 +63,13 @@ clean: ## Clean build artifacts
 	find . -type f -name "*.pyc" -delete
 	find . -type d -name "__pycache__" -exec rm -rf {} + 2>/dev/null || true
 	rm -rf .pytest_cache .mypy_cache .coverage coverage.xml dist build
+
+# ─── Compat aliases ───────────────────────────────────────────────────────────
+
+typecheck: ## Alias → type-check
+	@$(MAKE) type-check
+
+
+
+build: ## Build Docker image
+	docker compose build
