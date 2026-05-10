@@ -11,8 +11,8 @@ def main() -> int:
     parser.add_argument("--dry-run", action="store_true", help="Validate config without running")
     args = parser.parse_args()
 
-    print(f"DIY Stream Deck — config: {args.config}")
-    print("Not yet implemented — see roadmap in README.md")
+    print(f"DIY Stream Deck — config: {args.config}")  # noqa: T201
+    print("Not yet implemented — see roadmap in README.md")  # noqa: T201
     return 0
 
 
