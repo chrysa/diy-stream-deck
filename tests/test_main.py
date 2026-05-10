@@ -6,7 +6,7 @@ import sys
 
 def test_main_no_args_fails():
     """Running without args should exit with non-zero."""
-    result = subprocess.run(
+    result = subprocess.run(  # noqa: S603
         [sys.executable, "-m", "diy_stream_deck"],
         capture_output=True,
         text=True,
@@ -18,7 +18,7 @@ def test_main_dry_run(tmp_path):
     """Running with --dry-run and a missing config should not crash the import."""
     config = tmp_path / "test.yml"
     config.write_text("device:\n  type: virtual\n")
-    result = subprocess.run(
+    result = subprocess.run(  # noqa: S603
         [sys.executable, "-m", "diy_stream_deck", "--config", str(config), "--dry-run"],
         capture_output=True,
         text=True,
