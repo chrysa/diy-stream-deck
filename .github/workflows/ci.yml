@@ -8,63 +8,118 @@ on:
     push:
         branches:
             - main
-            - feature/**
-            - fix/**
+            - "feat/**"
+            - "feature/**"
+            - "fix/**"
+            - "chore/**"
+            - "ci/**"
     workflow_dispatch:
 
 permissions:
-    contents: write
     checks: write
+    contents: write
     pull-requests: write
+    statuses: write
+
+concurrency:
+    group: ${{ github.workflow }}-${{ github.ref }}
+    cancel-in-progress: true
 
 jobs:
-    lint:
-        name: Lint & Format
+    config:
+        name: Build matrix config
         runs-on: ubuntu-latest
-        timeout-minutes: 10
+        timeout-minutes: 5
+        outputs:
+            python-versions: ${{ steps.matrix.outputs.python-versions }}
+            latest-python: ${{ steps.matrix.outputs.latest-python }}
+        steps:
+            - id: matrix
+              shell: bash
+              run: |
+                  echo 'python-versions=["3.12","3.13","3.14"]' >> "$GITHUB_OUTPUT"
+                  echo 'latest-python=3.14' >> "$GITHUB_OUTPUT"
+
+    ruff:
+        name: Ruff (${{ matrix.python-version }})
+        needs: config
+        runs-on: ubuntu-latest
+        timeout-minutes: 15
         strategy:
+            fail-fast: false
             matrix:
-                python-version: ["3.12", "3.13"]
+                python-version: ${{ fromJson(needs.config.outputs.python-versions) }}
         steps:
             - uses: actions/checkout@v6
 
-            - uses: chrysa/github-actions/python-setup@main
+            - name: Setup environment
+              uses: chrysa/github-actions/tool-setup@v1
               with:
                   python-version: ${{ matrix.python-version }}
+                  extras: dev
 
-            - uses: chrysa/github-actions/ruff-check@main
+            - name: Ruff checks
+              uses: chrysa/github-actions/ruff-check@v1
               with:
                   python-version: ${{ matrix.python-version }}
-                  latest-python: "3.13"
+                  latest-python: ${{ needs.config.outputs.latest-python }}
                   sources: "diy_stream_deck tests"
 
-    tests:
-        name: Tests
+    mypy:
+        name: Mypy (${{ matrix.python-version }})
+        needs: config
         runs-on: ubuntu-latest
-        timeout-minutes: 10
+        continue-on-error: true
+        timeout-minutes: 20
         strategy:
+            fail-fast: false
             matrix:
-                python-version: ["3.12", "3.13"]
+                python-version: ${{ fromJson(needs.config.outputs.python-versions) }}
         steps:
             - uses: actions/checkout@v6
 
-            - uses: chrysa/github-actions/python-setup@main
+            - name: Setup environment
+              uses: chrysa/github-actions/tool-setup@v1
               with:
                   python-version: ${{ matrix.python-version }}
+                  extras: dev
 
-            - name: Install dependencies
-              run: pip install -e ".[dev]"
-
-            - uses: chrysa/github-actions/run-tests@main
+            - name: Mypy checks
+              uses: chrysa/github-actions/mypy-check@v1
               with:
                   python-version: ${{ matrix.python-version }}
-                  latest-python: "3.13"
-                  test-path: "tests/"
+                  latest-python: ${{ needs.config.outputs.latest-python }}
+                  sources: diy_stream_deck
+
+    test:
+        name: Test (${{ matrix.python-version }})
+        needs: config
+        runs-on: ubuntu-latest
+        timeout-minutes: 30
+        strategy:
+            fail-fast: false
+            matrix:
+                python-version: ${{ fromJson(needs.config.outputs.python-versions) }}
+        steps:
+            - uses: actions/checkout@v6
+
+            - name: Setup environment
+              uses: chrysa/github-actions/tool-setup@v1
+              with:
+                  python-version: ${{ matrix.python-version }}
+                  extras: dev
+
+            - name: Run tests
+              uses: chrysa/github-actions/run-tests@v1
+              with:
+                  python-version: ${{ matrix.python-version }}
+                  latest-python: ${{ needs.config.outputs.latest-python }}
+                  cov-module: diy_stream_deck
 
     sonar:
-        name: SonarCloud
-        needs: [lint, tests]
-        if: github.ref == 'refs/heads/main'
+        name: SonarCloud analysis
+        needs: [config, ruff, mypy, test]
+        if: always()
         runs-on: ubuntu-latest
         timeout-minutes: 15
         steps:
@@ -72,14 +127,14 @@ jobs:
               with:
                   fetch-depth: 0
 
-            - name: SonarCloud Scan
-              uses: SonarSource/sonarcloud-github-action@v5
-              env:
-                  SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+            - name: SonarCloud scan
+              uses: chrysa/github-actions/sonar-scan@v1
               with:
-                  args: >
-                      -Dsonar.projectKey=chrysa_diy-stream-deck
-                      -Dsonar.organization=chrysa
-                      -Dsonar.python.version=3.12,3.13
-                      -Dsonar.sources=diy_stream_deck
-                      -Dsonar.tests=tests
+                  latest-python: ${{ needs.config.outputs.latest-python }}
+                  sonar-token: ${{ secrets.SONAR_TOKEN }}
+                  github-token: ${{ secrets.GITHUB_TOKEN }}
+                  project-key: chrysa_diy-stream-deck
+                  organization: chrysa
+                  project-name: diy-stream-deck
+                  sources: diy_stream_deck
+                  tests: tests
