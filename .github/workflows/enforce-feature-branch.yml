@@ -11,7 +11,7 @@ jobs:
       - name: Validate PR source branch naming
         shell: bash
         run: |
-          branch="${{ github.head_ref }}"
+          branch="$BRANCH_NAME"
           if [[ "$branch" == dependabot/* ]]; then
             echo "Dependabot branch — policy check skipped"
             exit 0
@@ -22,3 +22,6 @@ jobs:
             echo "Expected: type/short-description (e.g. feature/add-auth-flow)"
             exit 1
           fi
+
+        env:
+          BRANCH_NAME: ${{ github.head_ref }}
