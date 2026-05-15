@@ -1,4 +1,4 @@
-on:
+true:
   pull_request:
     paths:
     - .github/actionlint.yaml
