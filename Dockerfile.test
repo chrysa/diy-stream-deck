@@ -1,0 +1,12 @@
+FROM python:3.14-slim AS deps
+WORKDIR /app
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    gcc python3-dev linux-headers-generic 2>/dev/null || \
+    apt-get install -y --no-install-recommends gcc python3-dev && \
+    rm -rf /var/lib/apt/lists/*
+COPY pyproject.toml .
+RUN pip install --no-cache-dir ".[dev]"
+
+FROM deps AS test
+COPY . .
+CMD ["pytest", "tests/", "-v"]
