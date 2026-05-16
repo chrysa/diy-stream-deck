@@ -4,17 +4,23 @@ default_language_version:
 fail_fast: false
 minimum_pre_commit_version: 4.1.0
 repos:
+    - repo: https://github.com/astral-sh/ruff-pre-commit
+      rev: v0.11.10
+      hooks:
+          - id: ruff
+          - id: ruff-format
+
     - repo: https://github.com/chrysa/pre-commit-tools
       rev: v0.1.1-75
       hooks:
-          - id: ruff-check
-          - id: ruff-format-check
-          - id: detect-private-key
-          - id: no-commit-to-branch
+          - id: python-unreachable-code
+          - id: no-bare-except
 
     - repo: https://github.com/pre-commit/pre-commit-hooks
       rev: v6.0.0
       hooks:
+          - id: detect-private-key
+          - id: no-commit-to-branch
           - id: trailing-whitespace
           - id: end-of-file-fixer
           - id: check-yaml
