@@ -2,38 +2,44 @@
 name: SonarCloud Analysis
 
 on:
-  push:
-    branches: [main, master, develop]
-  pull_request:
-    types: [opened, synchronize, reopened]
-
-permissions:
-  contents: read
-  pull-requests: read
+    push:
+        branches:
+            - main
+            - master
+            - develop
+    pull_request:
+        types:
+            - opened
+            - synchronize
+            - reopened
 
 concurrency:
-  group: ${{ github.workflow }}-${{ github.ref }}
-  cancel-in-progress: true
+    group: ${{ github.workflow }}-${{ github.ref }}
+    cancel-in-progress: true
+
+permissions:
+    contents: read
+    pull-requests: read
 
 jobs:
-  sonar:
-    if: github.actor != 'dependabot[bot]'
-    name: SonarCloud scan
-    runs-on: ubuntu-latest
-    timeout-minutes: 15
-    steps:
-      - uses: actions/checkout@v6
-        with:
-          fetch-depth: 0
-
-      - name: SonarCloud scan
-        uses: chrysa/github-actions/sonar-scan@v1
-        with:
-          latest-python: "3.14"
-          sonar-token: ${{ secrets.SONAR_TOKEN }}
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          project-key: chrysa_diy-stream-deck
-          organization: chrysa
-          project-name: diy-stream-deck
-          sources: .
-          tests: tests
+    sonar:
+        if: github.actor != 'dependabot[bot]'
+        name: SonarCloud scan
+        runs-on: ubuntu-latest
+        timeout-minutes: 15
+        steps:
+            - name: Checkout
+              uses: actions/checkout@v6
+              with:
+                  fetch-depth: 0
+            - name: SonarCloud scan
+              uses: chrysa/github-actions/sonar-scan-python@v1
+              with:
+                  python-version: "3.14"
+                  sonar-token: ${{ secrets.SONAR_TOKEN }}
+                  github-token: ${{ secrets.GITHUB_TOKEN }}
+                  project-key: chrysa_diy-stream-deck
+                  organization: chrysa
+                  project-name: diy-stream-deck
+                  sources: .
+                  tests: tests
