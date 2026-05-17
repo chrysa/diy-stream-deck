@@ -1,130 +1,140 @@
-true:
+---
+name: CI
+
+on:
   pull_request:
     branches:
-    - main
+      - main
   push:
     branches:
-    - chore/**
-    - ci/**
-    - feat/**
-    - feature/**
-    - fix/**
-    - main
-  workflow_dispatch: null
+      - chore/**
+      - ci/**
+      - feat/**
+      - feature/**
+      - fix/**
+      - main
+  workflow_dispatch:
+
 concurrency:
   cancel-in-progress: true
   group: ${{ github.workflow }}-${{ github.ref }}
+
 jobs:
   config:
     name: Build matrix config
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    permissions:
+      contents: read
     outputs:
       latest-python: ${{ steps.matrix.outputs.latest-python }}
       python-versions: ${{ steps.matrix.outputs.python-versions }}
-    runs-on: ubuntu-latest
     steps:
-    - id: matrix
-      run: 'echo ''python-versions=["3.12","3.13","3.14"]'' >> "$GITHUB_OUTPUT"
+      - id: matrix
+        shell: bash
+        run: |
+          echo 'python-versions=["3.12","3.13","3.14"]' >> "$GITHUB_OUTPUT"
+          echo 'latest-python=3.14' >> "$GITHUB_OUTPUT"
 
-        echo ''latest-python=3.14'' >> "$GITHUB_OUTPUT"
-
-        '
-      shell: bash
-    timeout-minutes: 5
   mypy:
-    continue-on-error: true
     name: Mypy (${{ matrix.python-version }})
     needs: config
     runs-on: ubuntu-latest
-    steps:
-    - uses: actions/checkout@v6
-    - name: Setup environment
-      uses: chrysa/github-actions/tool-setup@v1
-      with:
-        extras: dev
-        python-version: ${{ matrix.python-version }}
-    - name: Mypy checks
-      uses: chrysa/github-actions/mypy-check@v1
-      with:
-        latest-python: ${{ needs.config.outputs.latest-python }}
-        python-version: ${{ matrix.python-version }}
-        sources: diy_stream_deck
+    timeout-minutes: 20
+    continue-on-error: true
+    permissions:
+      contents: read
     strategy:
       fail-fast: false
       matrix:
         python-version: ${{ fromJson(needs.config.outputs.python-versions) }}
-    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v6
+      - name: Setup environment
+        uses: chrysa/github-actions/tool-setup@v1
+        with:
+          extras: dev
+          python-version: ${{ matrix.python-version }}
+      - name: Mypy checks
+        uses: chrysa/github-actions/mypy-check@v1
+        with:
+          latest-python: ${{ needs.config.outputs.latest-python }}
+          python-version: ${{ matrix.python-version }}
+          sources: diy_stream_deck
+
   ruff:
     name: Ruff (${{ matrix.python-version }})
     needs: config
     runs-on: ubuntu-latest
-    steps:
-    - uses: actions/checkout@v6
-    - name: Setup environment
-      uses: chrysa/github-actions/tool-setup@v1
-      with:
-        extras: dev
-        python-version: ${{ matrix.python-version }}
-    - name: Ruff checks
-      uses: chrysa/github-actions/ruff-check@v1
-      with:
-        latest-python: ${{ needs.config.outputs.latest-python }}
-        python-version: ${{ matrix.python-version }}
-        sources: diy_stream_deck tests
+    timeout-minutes: 15
+    permissions:
+      contents: read
     strategy:
       fail-fast: false
       matrix:
         python-version: ${{ fromJson(needs.config.outputs.python-versions) }}
-    timeout-minutes: 15
-  sonar:
-    if: always()
-    name: SonarCloud analysis
-    needs:
-    - config
-    - mypy
-    - ruff
-    - test
-    runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v6
-      with:
-        fetch-depth: 0
-    - name: SonarCloud scan
-      uses: chrysa/github-actions/sonar-scan@v1
-      with:
-        github-token: ${{ secrets.GITHUB_TOKEN }}
-        latest-python: ${{ needs.config.outputs.latest-python }}
-        organization: chrysa
-        project-key: chrysa_diy-stream-deck
-        project-name: diy-stream-deck
-        sonar-token: ${{ secrets.SONAR_TOKEN }}
-        sources: diy_stream_deck
-        tests: tests
-    timeout-minutes: 15
+      - uses: actions/checkout@v6
+      - name: Setup environment
+        uses: chrysa/github-actions/tool-setup@v1
+        with:
+          extras: dev
+          python-version: ${{ matrix.python-version }}
+      - name: Ruff checks
+        uses: chrysa/github-actions/ruff-check@v1
+        with:
+          latest-python: ${{ needs.config.outputs.latest-python }}
+          python-version: ${{ matrix.python-version }}
+          sources: diy_stream_deck tests
+
   test:
     name: Test (${{ matrix.python-version }})
     needs: config
     runs-on: ubuntu-latest
-    steps:
-    - uses: actions/checkout@v6
-    - name: Setup environment
-      uses: chrysa/github-actions/tool-setup@v1
-      with:
-        extras: dev
-        python-version: ${{ matrix.python-version }}
-    - name: Run tests
-      uses: chrysa/github-actions/run-tests@v1
-      with:
-        cov-module: diy_stream_deck
-        latest-python: ${{ needs.config.outputs.latest-python }}
-        python-version: ${{ matrix.python-version }}
+    timeout-minutes: 30
+    permissions:
+      checks: write
+      contents: read
+      pull-requests: write
     strategy:
       fail-fast: false
       matrix:
         python-version: ${{ fromJson(needs.config.outputs.python-versions) }}
-    timeout-minutes: 30
-name: CI
-permissions:
-  checks: write
-  contents: write
-  pull-requests: write
-  statuses: write
+    steps:
+      - uses: actions/checkout@v6
+      - name: Setup environment
+        uses: chrysa/github-actions/tool-setup@v1
+        with:
+          extras: dev
+          python-version: ${{ matrix.python-version }}
+      - name: Run tests
+        uses: chrysa/github-actions/run-tests@v1
+        with:
+          cov-module: diy_stream_deck
+          latest-python: ${{ needs.config.outputs.latest-python }}
+          python-version: ${{ matrix.python-version }}
+
+  sonar:
+    name: SonarCloud analysis
+    needs: [config, mypy, ruff, test]
+    if: always()
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    permissions:
+      contents: read
+      statuses: write
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+      - name: SonarCloud scan
+        uses: chrysa/github-actions/sonar-scan@v1
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          latest-python: ${{ needs.config.outputs.latest-python }}
+          organization: chrysa
+          project-key: chrysa_diy-stream-deck
+          project-name: diy-stream-deck
+          sonar-token: ${{ secrets.SONAR_TOKEN }}
+          sources: diy_stream_deck
+          tests: tests
