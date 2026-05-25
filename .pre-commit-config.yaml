@@ -15,6 +15,12 @@ repos:
     hooks:
       - id: python-unreachable-code
       - id: no-bare-except
+      - id: adr-gate
+      - id: python-print-detection
+      - id: python-pprint-detection
+      - id: python-logger-detection
+      - id: no-sync-in-async
+      - id: debugger-detection
       - id: regression-gate
         stages: [pre-push]
 
