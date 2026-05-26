@@ -59,6 +59,7 @@ jobs:
       - name: Mypy checks
         uses: chrysa/github-actions/mypy-check@v1.0.8
         with:
+          config-file: pyproject.toml
           python-version: ${{ matrix.python-version }}
           sources: diy_stream_deck
 
