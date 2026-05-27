@@ -11,7 +11,7 @@ repos:
       - id: ruff-format
 
   - repo: https://github.com/chrysa/pre-commit-tools
-    rev: v0.1.1-76
+    rev: v0.1.1-92
     hooks:
       - id: python-unreachable-code
       - id: no-bare-except
