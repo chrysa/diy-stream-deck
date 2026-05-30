@@ -52,12 +52,12 @@ jobs:
     steps:
       - uses: actions/checkout@v6
       - name: Setup environment
-        uses: chrysa/github-actions/tool-setup@v1.0.8
+        uses: chrysa/github-actions/tool-setup@v1.0.12
         with:
           extras: dev
           python-version: ${{ matrix.python-version }}
       - name: Mypy checks
-        uses: chrysa/github-actions/mypy-check@v1.0.8
+        uses: chrysa/github-actions/mypy-check@v1.0.12
         with:
           config-file: pyproject.toml
           python-version: ${{ matrix.python-version }}
@@ -77,12 +77,12 @@ jobs:
     steps:
       - uses: actions/checkout@v6
       - name: Setup environment
-        uses: chrysa/github-actions/tool-setup@v1.0.8
+        uses: chrysa/github-actions/tool-setup@v1.0.12
         with:
           extras: dev
           python-version: ${{ matrix.python-version }}
       - name: Ruff checks
-        uses: chrysa/github-actions/ruff-check@v1.0.8
+        uses: chrysa/github-actions/ruff-check@v1.0.12
         with:
           python-version: ${{ matrix.python-version }}
           sources: diy_stream_deck tests
@@ -103,12 +103,12 @@ jobs:
     steps:
       - uses: actions/checkout@v6
       - name: Setup environment
-        uses: chrysa/github-actions/tool-setup@v1.0.8
+        uses: chrysa/github-actions/tool-setup@v1.0.12
         with:
           extras: dev
           python-version: ${{ matrix.python-version }}
       - name: Run tests
-        uses: chrysa/github-actions/run-tests@v1.0.8
+        uses: chrysa/github-actions/run-tests@v1.0.12
         with:
           cov-module: diy_stream_deck
           python-version: ${{ matrix.python-version }}
@@ -127,7 +127,7 @@ jobs:
         with:
           fetch-depth: 0
       - name: SonarCloud scan
-        uses: chrysa/github-actions/sonar-scan-python@v1
+        uses: chrysa/github-actions/sonar-scan-python@v1.0.12
 
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
