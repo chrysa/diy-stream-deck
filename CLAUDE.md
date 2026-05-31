@@ -48,3 +48,9 @@ pre-commit run --all-files
 ## Notion
 
 Project tracking: https://www.notion.so/33759293e35e812f8d14ea4ea23618cf
+
+## Skills
+
+Shared skills from `shared-standards/.claude/skills/`:
+
+- `ui-ux/SKILL.md` — UX/UI/ergonomics across ALL surfaces (web, CLI, VS Code, Discord, desktop, game, agent) + WCAG 2.1 AA + dark mode + i18n FR+EN (load when building any human-facing surface)
