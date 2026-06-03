@@ -127,7 +127,7 @@ jobs:
         with:
           fetch-depth: 0
       - name: SonarCloud scan
-        uses: chrysa/github-actions/sonar-scan-python@v1
+        uses: chrysa/github-actions/sonar-scan-python@v1.1.0
 
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
