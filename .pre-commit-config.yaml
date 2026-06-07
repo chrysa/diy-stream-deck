@@ -11,7 +11,7 @@ repos:
       - id: ruff-format
 
   - repo: https://github.com/chrysa/pre-commit-tools
-    rev: v0.1.1-92
+    rev: v0.1.1-93
     hooks:
       - id: python-unreachable-code
       - id: no-bare-except
@@ -23,6 +23,13 @@ repos:
       - id: debugger-detection
       - id: regression-gate
         stages: [pre-push]
+      - exclude: ^(\.github/|workflows/|templates/)
+        id: yaml-sorter
+      - id: json-sorter
+      - id: env-file-check
+      - id: env-example-sync
+      - id: no-hardcoded-localhost
+        exclude: 'tests?/|\.test\.|\.spec\.'
 
   - repo: https://github.com/pre-commit/pre-commit-hooks
     rev: v6.0.0
@@ -50,3 +57,15 @@ repos:
       - id: conventional-pre-commit
         stages: [commit-msg]
         args: [feat, fix, docs, style, refactor, test, chore, perf, revert, ci]
+  - repo: https://github.com/igorshubovych/markdownlint-cli
+    rev: v0.48.0
+    hooks:
+      - args:
+          - --fix
+        id: markdownlint
+        stages:
+          - manual
+  - repo: https://github.com/gitleaks/gitleaks
+    rev: v8.30.0
+    hooks:
+      - id: gitleaks
