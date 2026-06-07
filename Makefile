@@ -1,4 +1,5 @@
 #!make
+# makefile-tier: lib
 ifneq (,)
 	$(error This Makefile requires GNU Make)
 endif
@@ -44,7 +45,6 @@ format: ## Run ruff formatter
 typecheck: ## Run mypy type checking
 	mypy diy_stream_deck/
 
-type-check: typecheck ## Legacy alias
 
 # ─── Tests ────────────────────────────────────────────────────────────────────
 
