@@ -13,7 +13,7 @@ repos:
   - repo: https://github.com/chrysa/pre-commit-tools
     rev: v0.1.1-94
     hooks:
-    - id: makefile-check
+      - id: makefile-check
       - id: python-unreachable-code
       - id: no-bare-except
       - id: adr-gate
