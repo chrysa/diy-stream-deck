@@ -1,72 +1,80 @@
----
 default_language_version:
   python: python3.14
 fail_fast: false
 minimum_pre_commit_version: 4.1.0
 repos:
-  - repo: https://github.com/astral-sh/ruff-pre-commit
-    rev: v0.15.17
-    hooks:
-      - id: ruff
-      - id: ruff-format
-
-  - repo: https://github.com/chrysa/pre-commit-tools
-    rev: v0.1.1-94
-    hooks:
-      - id: makefile-check
-      - id: python-unreachable-code
-      - id: no-bare-except
-      - id: adr-gate
-      - id: python-print-detection
-      - id: python-pprint-detection
-      - id: python-logger-detection
-      - id: no-sync-in-async
-      - id: debugger-detection
-      - id: regression-gate
-        stages: [pre-push]
-      - exclude: ^(\.github/|workflows/|templates/)
-        id: yaml-sorter
-      - id: json-sorter
-      - id: env-file-check
-      - id: env-example-sync
-      - id: no-hardcoded-localhost
-        exclude: 'tests?/|\.test\.|\.spec\.'
-
-  - repo: https://github.com/pre-commit/pre-commit-hooks
-    rev: v6.0.0
-    hooks:
-      - id: detect-private-key
-      - id: no-commit-to-branch
-      - id: trailing-whitespace
-      - id: end-of-file-fixer
-      - id: check-yaml
-      - id: check-json
-      - id: check-toml
-      - id: check-merge-conflict
-      - id: check-added-large-files
-      - id: mixed-line-ending
-
-  - repo: https://github.com/adrienverge/yamllint
-    rev: v1.38.0
-    hooks:
-      - id: yamllint
-        args: [--strict]
-
-  - repo: https://github.com/compilerla/conventional-pre-commit
-    rev: v4.4.0
-    hooks:
-      - id: conventional-pre-commit
-        stages: [commit-msg]
-        args: [feat, fix, docs, style, refactor, test, chore, perf, revert, ci]
-  - repo: https://github.com/igorshubovych/markdownlint-cli
-    rev: v0.48.0
-    hooks:
-      - args:
-          - --fix
-        id: markdownlint
-        stages:
-          - manual
-  - repo: https://github.com/gitleaks/gitleaks
-    rev: v8.30.1
-    hooks:
-      - id: gitleaks
+- repo: https://github.com/astral-sh/ruff-pre-commit
+  rev: v0.15.20
+  hooks:
+  - id: ruff
+  - id: ruff-format
+- repo: https://github.com/chrysa/pre-commit-tools
+  rev: v0.1.1-95
+  hooks:
+  - id: makefile-check
+  - id: python-unreachable-code
+  - id: no-bare-except
+  - id: adr-gate
+  - id: python-print-detection
+  - id: python-pprint-detection
+  - id: python-logger-detection
+  - id: no-sync-in-async
+  - id: debugger-detection
+  - id: regression-gate
+    stages:
+    - pre-push
+  - exclude: ^(\.github/|workflows/|templates/)
+    id: yaml-sorter
+  - id: json-sorter
+  - id: env-file-check
+  - id: env-example-sync
+  - id: no-hardcoded-localhost
+    exclude: tests?/|\.test\.|\.spec\.
+- repo: https://github.com/pre-commit/pre-commit-hooks
+  rev: v6.0.0
+  hooks:
+  - id: detect-private-key
+  - id: no-commit-to-branch
+  - id: trailing-whitespace
+  - id: end-of-file-fixer
+  - id: check-yaml
+  - id: check-json
+  - id: check-toml
+  - id: check-merge-conflict
+  - id: check-added-large-files
+  - id: mixed-line-ending
+- repo: https://github.com/adrienverge/yamllint
+  rev: v1.38.0
+  hooks:
+  - id: yamllint
+    args:
+    - --strict
+- repo: https://github.com/compilerla/conventional-pre-commit
+  rev: v4.4.0
+  hooks:
+  - id: conventional-pre-commit
+    stages:
+    - commit-msg
+    args:
+    - feat
+    - fix
+    - docs
+    - style
+    - refactor
+    - test
+    - chore
+    - perf
+    - revert
+    - ci
+- repo: https://github.com/igorshubovych/markdownlint-cli
+  rev: v0.49.0
+  hooks:
+  - args:
+    - --fix
+    id: markdownlint
+    stages:
+    - manual
+- repo: https://github.com/gitleaks/gitleaks
+  rev: v8.30.1
+  hooks:
+  - id: gitleaks
