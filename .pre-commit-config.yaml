@@ -3,7 +3,6 @@ default_language_version:
 fail_fast: false
 minimum_pre_commit_version: 4.1.0
 exclude: ^\.claude/
-
 repos:
 - repo: https://github.com/astral-sh/ruff-pre-commit
   rev: v0.15.21
