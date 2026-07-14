@@ -3,7 +3,6 @@ default_language_version:
 fail_fast: false
 minimum_pre_commit_version: 4.1.0
 exclude: ^\.claude/
-
 repos:
 - repo: https://github.com/astral-sh/ruff-pre-commit
   rev: v0.15.21
@@ -11,7 +10,7 @@ repos:
   - id: ruff
   - id: ruff-format
 - repo: https://github.com/chrysa/pre-commit-tools
-  rev: v0.1.1-95
+  rev: v0.1.1-97
   hooks:
   - id: makefile-check
   - id: python-unreachable-code
