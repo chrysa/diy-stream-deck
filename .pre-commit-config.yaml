@@ -10,7 +10,7 @@ repos:
   - id: ruff
   - id: ruff-format
 - repo: https://github.com/chrysa/pre-commit-tools
-  rev: v0.1.1-97
+  rev: v0.1.1-98
   hooks:
   - id: makefile-check
   - id: python-unreachable-code
@@ -31,6 +31,9 @@ repos:
   - id: env-example-sync
   - id: no-hardcoded-localhost
     exclude: tests?/|\.test\.|\.spec\.
+  - id: claude-skill-frontmatter
+  - id: claude-agent-frontmatter
+  - id: claude-mcp-config
 - repo: https://github.com/pre-commit/pre-commit-hooks
   rev: v6.0.0
   hooks:
