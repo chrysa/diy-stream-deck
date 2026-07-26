@@ -1,17 +1,15 @@
 default_language_version:
   python: python3.14
+exclude: ^\.claude/
 fail_fast: false
 minimum_pre_commit_version: 4.1.0
-exclude: ^\.claude/
 repos:
-- repo: https://github.com/astral-sh/ruff-pre-commit
-  rev: v0.16.0
-  hooks:
+- hooks:
   - id: ruff
   - id: ruff-format
-- repo: https://github.com/chrysa/pre-commit-tools
-  rev: v0.1.1-98
-  hooks:
+  repo: https://github.com/astral-sh/ruff-pre-commit
+  rev: v0.16.0
+- hooks:
   - id: makefile-check
   - id: python-unreachable-code
   - id: no-bare-except
@@ -29,14 +27,14 @@ repos:
   - id: json-sorter
   - id: env-file-check
   - id: env-example-sync
-  - id: no-hardcoded-localhost
-    exclude: tests?/|\.test\.|\.spec\.
+  - exclude: tests?/|\.test\.|\.spec\.
+    id: no-hardcoded-localhost
   - id: claude-skill-frontmatter
   - id: claude-agent-frontmatter
   - id: claude-mcp-config
-- repo: https://github.com/pre-commit/pre-commit-hooks
-  rev: v6.0.0
-  hooks:
+  repo: https://github.com/chrysa/pre-commit-tools
+  rev: v0.1.1-98
+- hooks:
   - id: detect-private-key
   - id: no-commit-to-branch
   - id: trailing-whitespace
@@ -47,19 +45,16 @@ repos:
   - id: check-merge-conflict
   - id: check-added-large-files
   - id: mixed-line-ending
-- repo: https://github.com/adrienverge/yamllint
-  rev: v1.38.0
-  hooks:
-  - id: yamllint
-    args:
+  repo: https://github.com/pre-commit/pre-commit-hooks
+  rev: v6.0.0
+- hooks:
+  - args:
     - --strict
-- repo: https://github.com/compilerla/conventional-pre-commit
-  rev: v4.4.0
-  hooks:
-  - id: conventional-pre-commit
-    stages:
-    - commit-msg
-    args:
+    id: yamllint
+  repo: https://github.com/adrienverge/yamllint
+  rev: v1.38.0
+- hooks:
+  - args:
     - feat
     - fix
     - docs
@@ -70,20 +65,30 @@ repos:
     - perf
     - revert
     - ci
-- repo: https://github.com/igorshubovych/markdownlint-cli
-  rev: v0.49.1
-  hooks:
+    id: conventional-pre-commit
+    stages:
+    - commit-msg
+  repo: https://github.com/compilerla/conventional-pre-commit
+  rev: v4.4.0
+- hooks:
   - args:
     - --fix
     id: markdownlint
     stages:
     - manual
-- repo: https://github.com/gitleaks/gitleaks
-  rev: v8.30.1
-  hooks:
+  repo: https://github.com/igorshubovych/markdownlint-cli
+  rev: v0.49.1
+- hooks:
   - id: gitleaks
-- repo: https://github.com/chrysa/guideline-checker
+  repo: https://github.com/gitleaks/gitleaks
+  rev: v8.30.1
+- hooks:
+  - args:
+    - check
+    - --fail-on
+    - error
+    - --baseline
+    - .guideline-baseline.json
+    id: guideline-check
+  repo: https://github.com/chrysa/guideline-checker
   rev: v1.15.0
-  hooks:
-  - id: guideline-check
-    args: [check, --fail-on, error, --baseline, .guideline-baseline.json]
