@@ -93,4 +93,4 @@ repos:
     - .guideline-baseline.json
     id: guideline-check
   repo: https://github.com/chrysa/guideline-checker
-  rev: v1.15.4
+  rev: v1.30.10
