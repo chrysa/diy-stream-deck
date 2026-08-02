@@ -1,9 +1,14 @@
 on:
   pull_request: null
+concurrency:
+    group: ${{ github.workflow }}-${{ github.ref }}
+    cancel-in-progress: true
+
 jobs:
   dependencies:
     name: Check PR dependencies
     runs-on: ubuntu-latest
+    timeout-minutes: 30
     steps:
     - uses: gregsdennis/dependencies-action@a8cccab69814b9b985496cf97cbfe154c96c03c7 # v1.4.2
 name: Dependencies
