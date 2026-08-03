@@ -63,8 +63,3 @@ jobs:
         \ regression detected\"\nfi\ngh api \"repos/${REPO}/statuses/${SHA}\" \\\n\
         \  -f state=\"${STATE}\" \\\n  -f context=\"quality-gate\" \\\n  -f description=\"\
         ${DESCRIPTION}\"\n"
-name: Quality Gate Check
-permissions:
-  checks: write
-  contents: read
-  statuses: write
