@@ -24,4 +24,3 @@ jobs:
         \n  echo \"Expected: type/short-description (e.g. feature/add-auth-flow)\"\
         \n  exit 1\nfi\n"
       shell: bash
-name: Enforce Feature Branch Policy
