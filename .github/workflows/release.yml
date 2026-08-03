@@ -50,7 +50,3 @@ jobs:
         name: Release ${{ steps.changelog.outputs.version }}
         tag_name: ${{ steps.changelog.outputs.version }}
         token: ${{ secrets.RELEASE_TOKEN || secrets.GITHUB_TOKEN }}
-name: Release
-permissions:
-  contents: write
-  pull-requests: read
