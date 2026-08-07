@@ -2,7 +2,7 @@
 
 [![CI](https://github.com/chrysa/diy-stream-deck/actions/workflows/ci.yml/badge.svg)](https://github.com/chrysa/diy-stream-deck/actions/workflows/ci.yml)
 [![pre-commit](https://img.shields.io/badge/pre--commit-enabled-brightgreen?logo=pre-commit)](https://pre-commit.com/)
-[![Python](https://img.shields.io/badge/python-3.12%2B-blue)](https://www.python.org)
+[![Python](https://img.shields.io/badge/python-3.14%2B-blue)](https://www.python.org)
 [![Platform](https://img.shields.io/badge/platform-Linux%20%7C%20Windows-lightgrey)](https://github.com/chrysa/diy-stream-deck)
 
 > DIY Stream Deck alternative — fully compatible with Linux and Windows. Maps physical inputs (macro pad, Raspberry Pi Pico W, or repurposed tablet) to custom actions with Home Assistant integration.
@@ -40,33 +40,27 @@ This project builds a fully open-source Stream Deck alternative that works on Li
 
 ## Architecture
 
+> **Status: early scaffold.** Only the package skeleton and the CLI entry point
+> (`python -m diy_stream_deck --config <file>`, with `--dry-run` config validation)
+> exist today. The layout below is the **target** architecture — modules are added
+> as the roadmap milestones land, not before.
+
 ```
+diy_stream_deck/
+  __main__.py      # CLI entry point + config validation (implemented)
+
+# Planned (see Roadmap):
 hardware/          # Hardware abstraction layer (HID, Pico W, virtual)
   pico-w/          # MicroPython firmware for Raspberry Pi Pico W
   macropad/        # Support for USB macropad HID devices
   virtual/         # Virtual device for testing (no hardware required)
 
-core/              # Core engine
-  engine.py        # Main event loop and action dispatcher
-  key_mapper.py    # Key binding resolution
-  action_runner.py # Action executor (async)
+core/              # Core engine (event loop, key mapper, action runner)
+actions/           # Built-in action plugins (ha_service, shell_cmd, http_request, media_control, hotkey)
+config/            # YAML config schema + loader (hot-reload)
+ui/                # Optional system tray
 
-actions/           # Built-in action plugins
-  ha_service.py    # Home Assistant service call
-  shell_cmd.py     # Execute shell command
-  http_request.py  # HTTP GET/POST
-  media_control.py # Media keys (play/pause/volume)
-  hotkey.py        # Send keyboard shortcut to OS
-
-config/            # Configuration layer
-  schema.py        # YAML config schema validation
-  loader.py        # Config loader with hot-reload
-
-ui/                # Optional display and feedback
-  tray.py          # System tray icon (Linux/Windows)
-
-tests/             # Unit and integration tests
-docs/              # Architecture, setup, hardware guides
+tests/             # Unit and integration tests (implemented)
 ```
 
 ---
@@ -85,7 +79,7 @@ docs/              # Architecture, setup, hardware guides
 
 ## Requirements
 
-- Python 3.12+
+- Python 3.14+
 - `evdev` (Linux) or `pynput` (Windows/cross-platform) for HID input
 - `requests` for HTTP actions and Home Assistant API
 - `pyyaml` for configuration
@@ -97,17 +91,23 @@ docs/              # Architecture, setup, hardware guides
 
 ```bash
 # Install dependencies
-pip install -e ".[dev]"
+make install-dev            # or: pip install -e ".[dev]"
 
-# Copy example config
-cp config/examples/macropad.yml config/diy-stream-deck.yml
+# Write a config (see the Configuration section below for the schema)
+cat > diy-stream-deck.yml <<'YAML'
+device:
+  type: virtual
+YAML
 
-# Edit key bindings
-vim config/diy-stream-deck.yml
+# Validate the config without starting anything
+python -m diy_stream_deck --config diy-stream-deck.yml --dry-run
 
-# Run
-python -m diy_stream_deck --config config/diy-stream-deck.yml
+# Run (the runtime is not implemented yet — see Roadmap)
+python -m diy_stream_deck --config diy-stream-deck.yml
 ```
+
+> The runtime is still a stub: `--dry-run` fully validates the YAML config today,
+> while the action engine lands with the roadmap milestones.
 
 ---
 
