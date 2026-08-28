@@ -14,9 +14,9 @@ jobs:
     name: Build and deploy docs
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v7.0.1
+    - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
     - name: Set up Python 3.14
-      uses: actions/setup-python@v7.0.0
+      uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
       with:
         python-version: '3.14'
     - name: Install MkDocs
@@ -29,8 +29,3 @@ jobs:
         github_token: ${{ secrets.GITHUB_TOKEN }}
         publish_dir: site
     timeout-minutes: 10
-name: "GitHub Pages \u2014 Documentation"
-permissions:
-  contents: write
-  id-token: write
-  pages: write

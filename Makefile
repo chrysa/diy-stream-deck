@@ -26,8 +26,10 @@ help: ## Display this help message
 install: ## Install package dependencies
 	$(PIP) install -e "."
 
-dev: ## Install package + dev dependencies
+install-dev: ## Install package + dev dependencies
 	$(PIP) install -e ".[dev]"
+
+dev: install-dev ## Alias for install-dev (deprecated)
 
 pre-commit: ## Install and run pre-commit hooks
 	$(PIP) install --quiet pre-commit
@@ -37,13 +39,26 @@ pre-commit: ## Install and run pre-commit hooks
 # ─── Quality ──────────────────────────────────────────────────────────────────
 
 lint: ## Run ruff linting
-	ruff check diy_stream_deck/
+	ruff check diy_stream_deck/ tests/
 
 format: ## Run ruff formatter
-	ruff format diy_stream_deck/
+	ruff format diy_stream_deck/ tests/
+
+format-check: ## Check formatting without modifying files
+	ruff format --check diy_stream_deck/ tests/
 
 typecheck: ## Run mypy type checking
 	mypy diy_stream_deck/
+
+# ─── Quality gate ───────────────────────────────────────────────────────────────
+
+quality-gate-baseline: ## Record the quality-gate baseline
+	$(PYTHON) scripts/quality_gate.py baseline
+
+quality-gate-verify: ## Verify quality gates against the recorded baseline
+	$(PYTHON) scripts/quality_gate.py verify
+
+ci: lint format-check typecheck test-cov ## Run the full CI gate locally
 
 
 # ─── Tests ────────────────────────────────────────────────────────────────────
