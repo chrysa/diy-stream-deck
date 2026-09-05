@@ -24,6 +24,8 @@ addopts = "--cov=diy_stream_deck --cov-report=xml --cov-report=term-missing --co
 source = ["diy_stream_deck"]
 omit = ["tests/*"]
 
+[tool.bandit]
+exclude_dirs = ["tests", "build", "dist", "alembic", ".venv", ".claude"]
 [project]
 name = "diy-stream-deck"
 version = "0.1.0"
