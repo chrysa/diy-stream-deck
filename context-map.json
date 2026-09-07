@@ -1,0 +1,40 @@
+{
+  "adrs": [],
+  "contracts": [
+    "standards"
+  ],
+  "ddd_level": "(not available)",
+  "dependencies": {
+    "python": [
+      "evdev",
+      "mypy",
+      "pre-commit",
+      "pynput",
+      "pytest",
+      "pytest-asyncio",
+      "pytest-cov",
+      "pyyaml",
+      "requests",
+      "ruff"
+    ]
+  },
+  "depends_on_shared_standards": true,
+  "description": "DIY Stream Deck alternative compatible with Linux and Windows",
+  "entry_points": [
+    "diy-stream-deck"
+  ],
+  "key_directories": [
+    ".claude",
+    ".github",
+    ".vscode",
+    "diy_stream_deck",
+    "docs",
+    "legal",
+    "scripts",
+    "standards",
+    "tests"
+  ],
+  "name": "diy-stream-deck",
+  "profiles": [],
+  "schema": "chrysa.context-map/1"
+}
