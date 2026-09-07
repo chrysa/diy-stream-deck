@@ -110,6 +110,7 @@ Project tracking: https://www.notion.so/33759293e35e812f8d14ea4ea23618cf
 ### Documentation & session state · `standards/rules/docs.md`
 - Notion logging
 - Documentation and Notion are maintained in lockstep with the code — a change that leaves them stale is unfinished
+- Every repo ships generated context files
 - Session lifecycle (primer + memory + hindsight)
 
 ### AI agents & features · `standards/rules/agents.md`
