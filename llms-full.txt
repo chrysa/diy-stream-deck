@@ -113,7 +113,6 @@ DIY Stream Deck alternative compatible with Linux and Windows
     action-check.yml
     approved-label.yml
     auto-assign.yml
-    auto-update-pre-commit.yml
     ci.yml
     dependabot-auto-merge.yml
     dependencies.yml
@@ -159,6 +158,7 @@ legal/
 opencode.json
 pyproject.toml
 scripts/
+  gen_context_files.py
   quality_gate.py
 sonar-project.properties
 standards/
@@ -200,6 +200,7 @@ version: 0.1.0
 .claude/ape/ape_hook.py
 diy_stream_deck/__init__.py — DIY Stream Deck package.
 diy_stream_deck/__main__.py — DIY Stream Deck entry point.
+scripts/gen_context_files.py — Generate the standardised per-repo context files from the repo's own content.
 scripts/quality_gate.py
 tests/__init__.py — Tests for DIY Stream Deck.
 tests/test_main.py — Tests for __main__ entry point.
