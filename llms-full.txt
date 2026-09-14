@@ -118,6 +118,7 @@ DIY Stream Deck alternative compatible with Linux and Windows
     dependencies.yml
     detect-conflicts.yml
     enforce-feature-branch.yml
+    enforce-shortcut-link.yml
     labeler.yml
     pages.yml
     pr-dependencies.yml
