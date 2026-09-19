@@ -189,4 +189,7 @@ Project tracking: https://www.notion.so/33759293e35e812f8d14ea4ea23618cf
 - Release & changelog config (canonical)
 - GitHub Actions (reuse first · custom actions centralised · thin workflows)
 - Pre-commit & git hooks (native, via pre-commit.com — never wrapped in make)
+
+### Local AI orchestration & local-first · `standards/rules/ai-orchestration.md`
+- AI orchestration & local-first
 <!-- chrysa:standards:end -->
