@@ -63,6 +63,18 @@
             "command": "sh -c 'f=\"$CLAUDE_PROJECT_DIR/.claude/hooks/verifiable-thresholds.cjs\"; [ ! -f \"$f\" ] || node \"$f\"'",
             "name": "verifiable-thresholds",
             "timeout": 10000
+          },
+          {
+            "type": "command",
+            "command": "sh -c 'f=\"$CLAUDE_PROJECT_DIR/.claude/hooks/cross-platform-guard.cjs\"; [ ! -f \"$f\" ] || node \"$f\"'",
+            "name": "cross-platform-guard",
+            "timeout": 10000
+          },
+          {
+            "type": "command",
+            "command": "sh -c 'f=\"$CLAUDE_PROJECT_DIR/.claude/hooks/run-tests-on-edit.cjs\"; [ ! -f \"$f\" ] || node \"$f\"'",
+            "name": "run-tests-on-edit",
+            "timeout": 60000
           }
         ]
       }
