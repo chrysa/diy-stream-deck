@@ -17,7 +17,7 @@ DIY Stream Deck alternative compatible with Linux and Windows. Maps physical inp
 
 ## Key Constraints
 
-- Python 3.12+ minimum, target 3.14
+- Python 3.14+ minimum, target 3.14
 - Must run on Linux AND Windows (no Linux-only code in core; use abstraction layer)
 - `evdev` for Linux HID — `pynput` for Windows HID — imported conditionally by platform
 - Home Assistant integration is optional — never required to start
