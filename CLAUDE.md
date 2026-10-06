@@ -45,6 +45,13 @@ pre-commit run --all-files
 
 Project tracking: https://www.notion.so/33759293e35e812f8d14ea4ea23618cf
 
+## Documentation map
+
+Root docs (see also `README.md`, `ARCHITECTURE.md`):
+`REQUIREMENTS.md` (PROD/TECH reqs + impl matrix), `CONSTRAINTS.md`, `DECISIONS.md` (ADR log),
+`TESTING.md`, `SECURITY.md` (secret scan + design findings), `ROADMAP.md`, `GLOSSARY.md`,
+`REVIEW.md` (doc-review, contradictions, UNKNOWNs, debt).
+
 
 ## graphify
 
