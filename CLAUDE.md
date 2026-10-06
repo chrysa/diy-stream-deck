@@ -118,6 +118,8 @@ Project tracking: https://www.notion.so/33759293e35e812f8d14ea4ea23618cf
 - Agent actions are governed
 - An AI feature is evaluated, not just shipped
 - An agent writes only where the owner owns
+- A retryable operation proves the retry has no external effects
+- A mass-mutation batch returns the explicit list of what it changed
 
 ### Security, identity & sessions · `standards/rules/security.md`
 - Per-person data implies a user account — no exceptions dressed up as simplicity

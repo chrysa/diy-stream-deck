@@ -87,6 +87,8 @@ DIY Stream Deck alternative compatible with Linux and Windows
       SKILL.md
     plan/
       SKILL.md
+    rollout-status/
+      SKILL.md
     spec/
       SKILL.md
     standards-authoring/
@@ -98,6 +100,7 @@ DIY Stream Deck alternative compatible with Linux and Windows
     verification-loop/
       SKILL.md
 .editorconfig
+.env.example
 .gitattributes
 .github/
   CODEOWNERS
