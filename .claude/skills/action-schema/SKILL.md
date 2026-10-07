@@ -1,5 +1,8 @@
 ---
-description: 'YAML config/action schema knowledge for diy-stream-deck: the device section, the per-action-type mapping shape (ha_service, shell_cmd, http_request, media_control, hotkey), and validation rules. Load in background when reading or extending the config loader (currently `diy_stream_deck/__main__.py::load_config` / `ConfigError`), and invoke `/action-schema` when adding a new action type or config field.'
+name: action-schema
+description: "YAML config/action schema knowledge for diy-stream-deck: the device section, the per-action-type mapping shape (ha_service, shell_cmd, http_request, media_control, hotkey), and validation rules."
+metadata:
+  full_description: "YAML config/action schema knowledge for diy-stream-deck: the device section, the per-action-type mapping shape (ha_service, shell_cmd, http_request, media_control, hotkey), and validation rules. Load in background when reading or extending the config loader (currently `diy_stream_deck/__main__.py::load_config` / `ConfigError`), and invoke `/action-schema` when adding a new action type or config field."
 ---
 
 # Action schema — diy-stream-deck config contract
