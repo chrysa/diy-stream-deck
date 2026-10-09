@@ -1,4 +1,5 @@
 ---
+name: cross-platform-check
 description: 'Linux/Windows parity checklist for diy-stream-deck. Run before finishing any change that touches `diy_stream_deck/core/`, `diy_stream_deck/hardware/`, or any other platform-crossing code, to enforce the CLAUDE.md rule "must run on Linux AND Windows, no Linux-only code in core."'
 ---
 
