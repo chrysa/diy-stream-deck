@@ -232,5 +232,6 @@
       "Read(**/*.min.js)",
       "Read(**/*.map)"
     ]
-  }
+  },
+  "model": "haiku"
 }
