@@ -13,6 +13,18 @@
             "timeout": 5000
           }
         ]
+      },
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash",
+            "args": [
+              "${CLAUDE_PROJECT_DIR}/.claude/hooks/pre-compact.sh"
+            ],
+            "timeout": 10
+          }
+        ]
       }
     ],
     "PreToolUse": [
@@ -51,6 +63,19 @@
             "name": "check-no-env-files",
             "timeout": 5000,
             "type": "command"
+          }
+        ]
+      },
+      {
+        "matcher": "Read",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python3",
+            "args": [
+              "${CLAUDE_PROJECT_DIR}/.claude/hooks/read_guard.py"
+            ],
+            "timeout": 10
           }
         ]
       }
@@ -123,6 +148,20 @@
           }
         ]
       }
+    ],
+    "SessionStart": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash",
+            "args": [
+              "${CLAUDE_PROJECT_DIR}/.claude/hooks/session-context.sh"
+            ],
+            "timeout": 10
+          }
+        ]
+      }
     ]
   },
   "attribution": {
@@ -150,9 +189,9 @@
       "Bash(rtk ruff check *)",
       "Bash(rtk ruff format *)",
       "Bash(rtk mypy *)",
-      "Bash(uv run pytest *)",
-      "Bash(uv run ruff *)",
-      "Bash(uv run mypy *)",
+      "Bash(rtk uv run pytest *)",
+      "Bash(rtk uv run ruff *)",
+      "Bash(rtk uv run mypy *)",
       "Bash(rtk uv sync *)",
       "Bash(rtk gh pr view *)",
       "Bash(rtk gh pr list *)",
@@ -161,7 +200,15 @@
       "Bash(rtk gh issue view *)",
       "Bash(rtk gh issue list *)",
       "Bash(rtk gh run list *)",
-      "Bash(rtk gh run view *)"
+      "Bash(rtk gh run view *)",
+      "Bash(make build)",
+      "Bash(make format)",
+      "Bash(make help)",
+      "Bash(make lint)",
+      "Bash(make test)",
+      "Bash(make typecheck)",
+      "Bash(python -m pytest *)",
+      "Bash(mypy *)"
     ],
     "ask": [
       "Bash(git push *)",
@@ -207,7 +254,13 @@
       "Bash(rtk docker push *)",
       "Bash(rtk npm publish *)",
       "Bash(rtk twine upload *)",
-      "Bash(rtk rm -rf *)"
+      "Bash(rtk rm -rf *)",
+      "Bash(git add *)",
+      "Bash(git commit *)",
+      "Bash(make dev *)",
+      "Bash(rtk git add *)",
+      "Bash(rtk git commit *)",
+      "Bash(rtk make dev *)"
     ],
     "deny": [
       "Read(**/.env)",
