@@ -156,6 +156,7 @@ CHANGELOG.md
 CLAUDE.md
 CODEOWNERS
 CONTRIBUTING.md
+DESIGN.md
 Dockerfile.test
 GitVersion.yml
 LICENSE
